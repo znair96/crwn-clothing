@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
 import {
@@ -16,7 +16,6 @@ const defaultFormFields = {
 const SignInForm = () => {
   const [signInFormFields, setSignInFormFields] = useState(defaultFormFields);
   const { email, password } = signInFormFields;
-
   const changeHandler = (event) => {
     const { name, value } = event.target;
     setSignInFormFields({
@@ -35,8 +34,7 @@ const SignInForm = () => {
       return;
     }
     try {
-      const response = await signInUserWithEmailAndPassword(email, password);
-      console.log(response);
+      const { user } = await signInUserWithEmailAndPassword(email, password);
     } catch (err) {
       if (err.code === "auth/invalid-login-credentials") {
         alert("Invalid creds...");
